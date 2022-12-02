@@ -8,18 +8,18 @@ namespace Dotnet_webapi.Controllers;
 public class HomeController : ControllerBase
 {
 
-    private readonly ILogger<HomeController> _logger;
+	private readonly ILogger<HomeController> _logger;
 	private readonly IScopedOperation _scopeOps;
 
 	public HomeController(ILogger<HomeController> logger, IScopedOperation scopeOps)
-    {
-        _logger = logger;
+	{
+		_logger = logger;
 		_scopeOps = scopeOps;
 	}
 
-    // [HttpGet(Name = "GetWeatherForecast")]
-    public IActionResult Get()
-    {
+	// [HttpGet(Name = "GetWeatherForecast")]
+	public IActionResult Get()
+	{
 		_logger.LogInformation("Get request is processed........");
 		_logger.LogInformation($"Scoped:  {_scopeOps.OperationId}");
 
