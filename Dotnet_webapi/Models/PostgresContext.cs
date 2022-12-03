@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using Dotnet_webapi.Models.Entity;
 using Dotnet_webapi.Models.Entity.Config;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dotnet_webapi.Models;
 
-public partial class PostgresContext : DbContext
+// public partial class PostgresContext : DbContext
+public partial class PostgresContext : IdentityDbContext
 {
 
     private readonly IConfiguration Configuration;
@@ -39,12 +41,14 @@ public partial class PostgresContext : DbContext
     public virtual DbSet<Passenger> Passengers { get; set; }
 
     public virtual DbSet<Phone> Phones { get; set; }
+    public virtual DbSet<RefreshToken> RefreshToken { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql(Configuration.GetConnectionString("PostgresDB"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
 
 		new AccountEntityTypeConfiguration().Configure(modelBuilder.Entity<Account>());
 

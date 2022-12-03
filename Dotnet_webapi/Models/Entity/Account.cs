@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Dotnet_webapi.Models.Entity;
 
-public partial class Account
+public partial class Account 
 {
     public int AccountId { get; set; }
 

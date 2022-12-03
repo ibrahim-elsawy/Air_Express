@@ -10,12 +10,12 @@ namespace Dotnet_webapi.Controllers;
 public class AccountController : ControllerBase
 {
 
-	private readonly ILogger<HomeController> _logger;
+	private readonly ILogger<AccountController> _logger;
 	private readonly IScopedOperation _scopeOps;
-    private readonly IAccountRepo _accountRepo;
+	private readonly IAccountRepo _accountRepo;
 
 	public AccountController(
-        ILogger<HomeController> logger, 
+        ILogger<AccountController> logger, 
         IScopedOperation scopeOps,
         IAccountRepo accountRepo
         )
@@ -25,7 +25,7 @@ public class AccountController : ControllerBase
         _accountRepo = accountRepo;
 	}
 
-    [HttpGet("{id}")]
+	[HttpGet("{id}")]
 	public async Task<IActionResult> GetAsync(int id)
 	{
 		_logger.LogInformation("Get request is processed........");
