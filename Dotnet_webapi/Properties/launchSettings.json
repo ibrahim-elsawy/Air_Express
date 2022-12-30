@@ -12,8 +12,8 @@
     "Dotnet_webapi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
       "launchUrl": "swagger",
+      "launchBrowser": false,
       "applicationUrl": "https://localhost:7019;http://localhost:5091",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

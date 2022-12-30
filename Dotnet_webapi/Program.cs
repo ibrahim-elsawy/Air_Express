@@ -49,6 +49,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAccountRepo, AccountRepo>();
 builder.Services.AddScoped<IRefreshTokenDAO, RefreshTokenDAO>();
 builder.Services.AddScoped<IRefreshTokenRepo, RefreshTokenRepo>();
+builder.Services.AddScoped<IFlightDAO, FlightDAO>();
+builder.Services.AddScoped<IFlightRepo, FlightRepo>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddTransient<ITransiantOperation, Operation>();
 builder.Services.AddSingleton<ISingletonOperation, Operation>();
