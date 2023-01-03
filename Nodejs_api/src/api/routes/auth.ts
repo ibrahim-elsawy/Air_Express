@@ -5,6 +5,7 @@ import { IUserInputDTO } from '@/interfaces/IUser';
 import middlewares from '../middlewares';
 import { celebrate, Joi } from 'celebrate';
 import { Logger } from 'winston';
+import EmailService from '../../services/EmailKafka';
 
 const route = Router();
 
@@ -25,7 +26,9 @@ export default (app: Router) => {
       logger.debug('Calling Sign-Up endpoint with body: %o', req.body );
       try {
         const authServiceInstance = Container.get(AuthService);
+        const emailServiceInstance = Container.get(EmailService);
         const { user, token } = await authServiceInstance.SignUp(req.body as IUserInputDTO);
+        await emailServiceInstance.sendBatch({ Email: user.login, Name: user.first_name });
         return res.status(201).json({ user, token });
       } catch (e) {
         logger.error('🔥 error: %o', e);
