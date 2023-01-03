@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-api
+  labels:
+    app: node-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-api
+  template:
+    metadata:
+      labels:
+        app: node-api
+    spec:
+      containers:
+      - name: node-api
+        image: node-api
+        ports:
+        - containerPort: 3000
+        env:
+        - name: ME_CONFIG_POSTGRES_ADMINUSERNAME
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-root-username
+        - name: ME_CONFIG_POSTGRES_ADMINPASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-root-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-api-service
+spec:
+  selector:
+    app: node-api
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 30000

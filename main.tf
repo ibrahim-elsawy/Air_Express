@@ -34,7 +34,7 @@ variable "db_pass_2" {
 }
 
 module "web_app_1" {
-  source = "../web-app-module"
+  source = "./app-module"
 
   # Input Variables
   bucket_name      = "web-app-1-devops-directive-web-app-data"

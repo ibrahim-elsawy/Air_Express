@@ -32,6 +32,14 @@ export default {
     port: parseInt(process.env.PGPORT ?? '5432', 10)
   },
   /**
+   * Apache Kafka
+   */
+  apacheKafka: {
+    broker: process.env.BROKER ?? 'localhost:9092',
+    topicName: process.env.TOPIC ?? 'email',
+    clientId: process.env.KAFKA_CLIENT_ID
+  },
+  /**
    * Your secret sauce
    */
   jwtSecret: process.env.JWT_SECRET ?? "weak_default_secret",
