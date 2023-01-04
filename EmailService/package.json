@@ -17,9 +17,11 @@
   "author": "Ibrahim Elsawy",
   "license": "ISC",
   "dependencies": {
+    "@types/nodemailer": "^6.4.7",
     "dotenv": "^8.2.0",
     "kafkajs": "^2.2.3",
     "lodash": "^4.17.21",
+    "nodemailer": "^6.8.0",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {

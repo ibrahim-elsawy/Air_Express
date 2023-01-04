@@ -1,10 +1,11 @@
 import config from '../config'
 import { Consumer, ConsumerSubscribeTopics, EachBatchPayload, Kafka, EachMessagePayload } from 'kafkajs'
+import sendEmail from './EmailService'
 
 
 interface ProducerMessage { 
 	Email: string,
-	name: string
+	Name: string
 };
 
 
@@ -53,6 +54,9 @@ export default class EmailConsumer {
 					for (const message of batch.messages) {
 						const prefix = `${batch.topic}[${batch.partition} | ${message.offset}] / ${message.timestamp}`
 						console.log(`- ${prefix} ${message.key}#${message.value}`)
+						const userDetails : ProducerMessage = JSON.parse(message.value!.toString());
+						// await sendEmail(value.Name, value.Email, `Thank you for registraion ${value.Name}`)
+						await sendEmail(userDetails.Name, 'ibrahimelsawy834@gmail.com', `Thank you for registraion ${userDetails.Name}`)
 					}
 				}
 			})

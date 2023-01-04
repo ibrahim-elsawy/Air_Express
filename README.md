@@ -4,7 +4,7 @@
 
 ![air express](./postgres_air_ERD.png)
 
-## Ch:5-> Short Queries and indexes
+## ch:5-> short queries and indexes
 
 ### Notes
 
@@ -94,3 +94,31 @@ AND bp.update_ts >='2020-08-16' AND bp.update_ts< '2020-08-20'
 ```
 
 ![page82](notes/list-5-12.png)
+
+## Ch:6-> Long queries and Full scans
+
+Hash joins work best when the first argument fits into main memory. The size of memory available can be tuned with server parameters.Summarizing Chapter 5 and this chapter, most of the time, index access works well with the nested loop algorithm (and vice versa), and sequential scans work well with a hash join.
+**The most restrictive joins (i.e., joins that reduce the result set size the most) should
+be executed first.**
+
+**Semi Joins**
+A semi-join between two tables R and S returns rows from table R for which there is at least one row from table S with matching values in the joining columns. And semi join can be achieved using **EXISTS** and **IN** keywords
+
+```sql
+SELECT * FROM flight f WHERE EXISTS
+  (SELECT flight_id FROM booking_leg WHERE flight_id=f.flight_id);
+
+SELECT * FROM flight WHERE flight_id IN
+  (SELECT flight_id FROM booking_leg)
+```
+
+semi-joins are often the most restrictive join in the query, and
+as stated earlier, the most **restrictive join** should be executed first.
+
+**When Is It Necessary to Specify Join Order?**
+When the number of tables involved in a query becomes too large, the optimizer no longer attempts to find the best possible join order. Although most system parameters are out of the scope of this book, there is one worth mentioning: join_collapse_limit In addition, recall that table statistics are not available for intermediate results, which may cause the optimizer to choose a suboptimal join order. If the SQL developer knows a better order of joins, it is possible to force the desired join order by setting join_ collapse_limit to 1. In this case, the optimizer will generate a plan in which the joins will be executed in the order they appear in the SELECT statement.  
+**Force a specific join order by setting the join_collapse_limit parameter to 1**
+
+Also you need to **Filter rows** that are not needed for an aggregate before you perform grouping.
+
+**The Main concept** is to try convert high selective queries and intermadiate results into restrictive results by using right filters.
